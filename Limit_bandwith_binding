@@ -1,0 +1,11 @@
+#MANGLE
+#Mark Koneksi
+/ip firewall mangle add chain="prerouting" src-mac-address="XX:XX:XX:XX:XX:XX" action="mark-connection" new-connection-mark="koneksi-binding-M104" comment="KONEKSI BINDING X" passthrough=yes
+#Mark Paket
+/ip firewall mangle add chain="forward" action="mark-packet" new-packet-mark="paket-binding-X" comment="PAKET BINDING X" passthrough=no connection-mark="koneksi-binding-X"
+
+#QUEUE
+#Add Queue Tree
+#Tambah queue Hotspot
+/queue tree add name="Koneksi Hotspot X" parent="Koneksi Hotspot"
+/queue tree add name="Browsing Hotspot X" parent="Koneksi Hotspot X" packet-mark="paket-binding-X" max-limit=10M queue="default"
