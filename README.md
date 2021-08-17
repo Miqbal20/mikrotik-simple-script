@@ -1,2 +1,0 @@
-# Mikrotik
-Arsip Mikrotik
