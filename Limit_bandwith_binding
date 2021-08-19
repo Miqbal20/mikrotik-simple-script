@@ -47,3 +47,6 @@ add chain=port-hole protocol=tcp dst-port=12345 action=drop
 add chain=port-hole protocol=tcp dst-port=17300 action=drop
 add chain=port-hole protocol=tcp dst-port=27374 action=drop
 add chain=port-hole protocol=tcp dst-port=65506 action=drop
+
+#Script Find and Replace
+:foreach x in=[/queue tree find max-limit=1M] do={/queue tree set $x max-limit=10M}
