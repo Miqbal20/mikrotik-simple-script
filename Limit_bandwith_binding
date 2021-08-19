@@ -14,3 +14,36 @@
 :for x from 1 to 100 do={/queue tree add name="Koneksi Hotspot $x" max-limit=10M  parent="Koneksi Hotspot"
 /queue tree add name="Browsing Hotspot $x" parent="Koneksi Hotspot $x" packet-mark="paket-binding-$x" max-limit=10M  queue="default"
 }
+
+#Block Port Hole
+/ip firewall filter
+add chain=port-hole protocol=udp dst-port=135-139 action=drop
+add chain=port-hole protocol=tcp dst-port=445 action=drop
+add chain=port-hole protocol=udp dst-port=445 action=drop
+add chain=port-hole protocol=tcp dst-port=593 action=drop
+add chain=port-hole protocol=tcp dst-port=1024-1030 action=drop
+add chain=port-hole protocol=tcp dst-port=1080 action=drop
+add chain=port-hole protocol=tcp dst-port=1214 action=drop
+add chain=port-hole protocol=tcp dst-port=1363 action=drop
+add chain=port-hole protocol=tcp dst-port=1364 action=drop
+add chain=port-hole protocol=tcp dst-port=1368 action=drop
+add chain=port-hole protocol=tcp dst-port=1373 action=drop
+add chain=port-hole protocol=tcp dst-port=1377 action=drop
+add chain=port-hole protocol=tcp dst-port=1433-1434 action=drop
+add chain=port-hole protocol=tcp dst-port=2745 action=drop
+add chain=port-hole protocol=tcp dst-port=2283 action=drop
+add chain=port-hole protocol=tcp dst-port=2535 action=drop
+add chain=port-hole protocol=tcp dst-port=2745 action=drop
+add chain=port-hole protocol=tcp dst-port=3127-3128 action=drop
+add chain=port-hole protocol=tcp dst-port=3410 action=drop
+add chain=port-hole protocol=tcp dst-port=4444 action=drop
+add chain=port-hole protocol=udp dst-port=4444 action=drop
+add chain=port-hole protocol=tcp dst-port=5554 action=drop
+add chain=port-hole protocol=tcp dst-port=8866 action=drop
+add chain=port-hole protocol=tcp dst-port=9898 action=drop
+add chain=port-hole protocol=tcp dst-port=10000 action=drop
+add chain=port-hole protocol=tcp dst-port=10080 action=drop
+add chain=port-hole protocol=tcp dst-port=12345 action=drop
+add chain=port-hole protocol=tcp dst-port=17300 action=drop
+add chain=port-hole protocol=tcp dst-port=27374 action=drop
+add chain=port-hole protocol=tcp dst-port=65506 action=drop
