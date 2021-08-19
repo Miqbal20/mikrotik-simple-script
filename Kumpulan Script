@@ -55,3 +55,20 @@ add chain=port-hole protocol=tcp dst-port=65506 action=drop
 
 #Script Find and Replace
 :foreach x in=[/queue tree find max-limit=1M] do={/queue tree set $x max-limit=10M}
+
+#################################################################################################################################################
+
+#Script Clear Lease
+if ( [ / ip dhcp-server lease find ] != "" ) do={ / ip dhcp-server lease remove [find dynamic] }
+
+#################################################################################################################################################
+
+#Script Flush DNS
+/ip dns cache flush
+
+#################################################################################################################################################
+
+#Script Reboot System
+/system reboot
+
+
