@@ -1,3 +1,4 @@
+#LIMIT KONEKSI BINDING (BYPASS) 
 #ADD MANGLE
 #Mark Koneksi
 /ip firewall mangle add chain="prerouting" src-mac-address="XX:XX:XX:XX:XX:XX" action="mark-connection" new-connection-mark="koneksi-binding-X" comment="KONEKSI BINDING X" passthrough=yes
