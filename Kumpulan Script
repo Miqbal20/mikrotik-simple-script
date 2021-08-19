@@ -1,10 +1,10 @@
-#MANGLE
+#ADD MANGLE
 #Mark Koneksi
 /ip firewall mangle add chain="prerouting" src-mac-address="XX:XX:XX:XX:XX:XX" action="mark-connection" new-connection-mark="koneksi-binding-X" comment="KONEKSI BINDING X" passthrough=yes
 #Mark Paket
 /ip firewall mangle add chain="forward" action="mark-packet" new-packet-mark="paket-binding-X" comment="PAKET BINDING X" passthrough=no connection-mark="koneksi-binding-X"
 
-#QUEUE
+#ADD QUEUE TREE
 #Add Queue Tree
 #Tambah queue Hotspot
 /queue tree add name="Koneksi Hotspot X" parent="Koneksi Hotspot"
@@ -14,6 +14,8 @@
 :for x from 1 to 100 do={/queue tree add name="Koneksi Hotspot $x" max-limit=10M  parent="Koneksi Hotspot"
 /queue tree add name="Browsing Hotspot $x" parent="Koneksi Hotspot $x" packet-mark="paket-binding-$x" max-limit=10M  queue="default"
 }
+
+############################################################################################################################################
 
 #Block Port Hole
 /ip firewall filter
@@ -47,6 +49,8 @@ add chain=port-hole protocol=tcp dst-port=12345 action=drop
 add chain=port-hole protocol=tcp dst-port=17300 action=drop
 add chain=port-hole protocol=tcp dst-port=27374 action=drop
 add chain=port-hole protocol=tcp dst-port=65506 action=drop
+
+#################################################################################################################################################
 
 #Script Find and Replace
 :foreach x in=[/queue tree find max-limit=1M] do={/queue tree set $x max-limit=10M}
