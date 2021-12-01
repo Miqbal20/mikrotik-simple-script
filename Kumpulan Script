@@ -71,4 +71,35 @@ if ( [ / ip dhcp-server lease find ] != "" ) do={ / ip dhcp-server lease remove 
 #Script Reboot System
 /system reboot
 
+#################################################################################################################################################
+#Script DHCP Server untuk tambah Mangle dan Queue tree secara otomatis, aktif saat ada Lease baru
+:local queueName "$leaseActIP";
+:if ($leaseBound = "1") do={
+#Mangle LAN
+/ip firewall mangle add chain="prerouting" src-address=$leaseActIP action="mark-connection" new-connection-mark="koneksi-$leaseActIP" passthrough=yes comment=$leaseActIP;
+/ip firewall mangle add chain="forward" action="mark-packet" new-packet-mark="paket-$leaseActIP" passthrough=no connection-mark="koneksi-$leaseActIP" comment=$leaseActIP;
+
+#Tambah queue tree
+/queue tree add name="Dynamic $leaseActIP" parent="2.2 Koneksi LAN"  max-limit=8M packet-mark="paket-$leaseActIP" queue="default";
+} else={
+   	/ip firewall mangle remove [/ip firewall mangle find comment=$leaseActIP];
+    	/queue tree remove "Dynamic $leaseActIP";
+}
+
+#################################################################################################################################################
+
+:local queueName "$leaseActIP";
+:if ($leaseBound = "1") do={
+#Mangle Hotspot
+/ip firewall mangle add chain="prerouting" src-mac-address=$leaseActMAC action="mark-connection" new-connection-mark="koneksi-$leaseActIP" passthrough=yes comment=$leaseActIP;
+/ip firewall mangle add chain="forward" action="mark-packet" new-packet-mark="paket-$leaseActIP" passthrough=no connection-mark="koneksi-$leaseActIP" comment=$leaseActIP;
+
+#Tambah queue tree
+/queue tree add name="Dynamic $leaseActIP" parent="2.1. Koneksi Hotspot"  max-limit=8M  packet-mark="paket-$leaseActIP" queue="default";
+} else={
+   	/ip firewall mangle remove [/ip firewall mangle find comment=$leaseActIP];
+    	/queue tree remove "Dynamic $leaseActIP";
+}
+
+
 
