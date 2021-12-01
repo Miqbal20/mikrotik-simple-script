@@ -5,7 +5,6 @@
 #Mark Paket
 /ip firewall mangle add chain="forward" action="mark-packet" new-packet-mark="paket-binding-X" comment="PAKET BINDING X" passthrough=no connection-mark="koneksi-binding-X"
 
-#ADD QUEUE TREE
 #Add Queue Tree
 #Tambah queue Hotspot
 /queue tree add name="Koneksi Hotspot X" parent="Koneksi Hotspot"
@@ -101,5 +100,5 @@ if ( [ / ip dhcp-server lease find ] != "" ) do={ / ip dhcp-server lease remove 
     	/queue tree remove "Dynamic $leaseActIP";
 }
 
-
+#################################################################################################################################################
 
